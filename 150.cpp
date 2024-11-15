@@ -20,19 +20,9 @@ public:
                 else st.push(left / right);
             }
             else {
-                int current = 0;
-                int sign = 1;
-
-                for (int i = 0; i < c.length(); i++) {
-                    if (c[i] == '-') sign = -1;
-                    else {
-                        current = current * 10 + (c[i] - '0');
-                    }
-                }
-                cout << current << endl;
-                st.push(current * sign);
+                st.push(stoi(c));
             } 
-        }  
+        }   
 
         return st.top();
     }
