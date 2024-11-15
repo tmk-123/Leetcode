@@ -6,8 +6,9 @@ class Solution {
 public:
     vector<vector<int>> fourSum(vector<int>& nums, int target) {
         vector<vector<int>> res;
+        if (nums.size() < 4) return res;
         sort(nums.begin(), nums.end());
-        
+
         for (int k = 0; k < nums.size() - 3; k++) {
             if (k > 0 && nums[k] == nums[k - 1]) continue;
 
