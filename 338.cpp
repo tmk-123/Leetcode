@@ -9,6 +9,8 @@ public:
         dp[0] = 0;
 
         for (int i = 1; i <= n; i++) {
+            // i >> 1 là dịch bit sang phải 1 đơn vị, tức là vứt số 1 cuối cùng đi
+            // i & 1 là số cuối của i là 0 hay 1
             dp[i] = (dp[i >> 1]) + (i & 1);
         }
 
