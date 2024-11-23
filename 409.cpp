@@ -11,6 +11,7 @@ public:
         int len = 0;
         bool has_odd = false;
 
+        // greedy : ôm tất cả chẫn phần tử rồi cộng 1 nếu có lẻ
         for (auto [ch, cnt] : freq) {
             if (cnt % 2 == 0) len += cnt;
             else {
