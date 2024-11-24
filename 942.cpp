@@ -15,9 +15,8 @@ public:
             }
             else res.push_back(maxNumber--);
         }
-
-        if (s[n - 1] == 'I') res.push_back(minNumber);
-        else res.push_back(maxNumber);
+        
+        res.push_back(minNumber);
         return res;
     }
 };
