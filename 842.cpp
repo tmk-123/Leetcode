@@ -25,6 +25,7 @@ public:
 
 private:
     bool isValid(int start, long long a, long long b, string& num, vector<int>& res) {
+        // start là từ ký tự đầu tiên của c
         while (start < num.length()) {
             long long c = a + b;
             if (c > INT_MAX) return false;
@@ -32,6 +33,7 @@ private:
             string sum = to_string(c);
             if (sum != num.substr(start, sum.length())) return false;
             res.push_back((int)c);
+
             start += sum.length();
             a = b;
             b = c;
