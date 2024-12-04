@@ -5,55 +5,39 @@ using namespace std;
 class Solution {
 public:
     vector<int> splitIntoFibonacci(string num) {
-        for (int i = 1; i < num.length() && i < 11; i++) {
-            for (int j = 1; j + i < num.length() && j < 11; j++) {
-                string s1 = num.substr(0, i);
-                string s2 = num.substr(i, j); 
+        int n = num.size();
+        for (int i = 1; i <= 10 && i < n; ++i) {
+            if (i > 1 && num[0] == '0') break;  // Số bắt đầu bằng '0' không hợp lệ
+            long long a = stoll(num.substr(0, i));
+            if (a > INT_MAX) break;
 
-                if ((i > 1 && s1[0] == '0') || (j > 1 && s2[0] == '0')) continue;
-                if (stoll(s1) > INT_MAX || stoll(s2) > INT_MAX) continue;
+            for (int j = 1; j <= 10 && i + j < n; ++j) {
+                if (j > 1 && num[i] == '0') break;  // Số bắt đầu bằng '0' không hợp lệ
+                long long b = stoll(num.substr(i, j));
+                if (b > INT_MAX) break;
 
-                vector<int> res;
-                res.push_back(stoll(s1));
-                res.push_back(stoll(s2));
-
-                if (backtrack(0, s1, s2, num, res)) return res;
+                vector<int> res = {(int)a, (int)b};
+                if (isValid(i + j, a, b, num, res)) return res;
             }
         }
-
         return {};
     }
 
-    bool backtrack(int begin, string s1, string s2, string num, vector<int>& res) {
-        string s3 = sum_string(s1, s2);
-        if ((s3.length() + begin + s1.length() + s2.length() > num.length()) || (s3.length() > 1 && s3[0] == '0') || stoll(s3) > INT_MAX) return false;
+private:
+    bool isValid(int start, long long a, long long b, string& num, vector<int>& res) {
+        while (start < num.length()) {
+            long long c = a + b;
+            if (c > INT_MAX) return false;
+
+            string sum = to_string(c);
+            if (sum != num.substr(start, sum.length())) return false;
+            res.push_back((int)c);
+            start += sum.length();
+            a = b;
+            b = c;
+        }
         
-        res.push_back(stoll(s3));
-
-        if (s3 == num.substr(begin + s1.length() + s2.length(), s3.length())) {
-            if (begin + s1.length() + s2.length() + s3.length() == num.length()) return true;
-            return backtrack(begin + s1.length(), s2, s3, num, res);
-        }
-
-        return false;
-    }
-
-    string sum_string(string s1, string s2) {
-        if (s1.length() < s2.length() || (s1.length() == s2.length() && s1 < s2)) swap(s1, s2);
-        while (s1.length() > s2.length()) s2.insert(0, "0");
-
-        string sum = "";
-        int remainder = 0;
-        for (int i = s1.length() - 1; i >= 0; i--) {
-            int x = (s1[i] - '0') + (s2[i] - '0') + remainder;
-            sum.push_back((x % 10) + '0');
-            remainder = x / 10;
-        }
-
-        if (remainder) sum.push_back(remainder + '0');
-        reverse(sum.begin(), sum.end());
-
-        return sum;
+        return true;
     }
 };
 
