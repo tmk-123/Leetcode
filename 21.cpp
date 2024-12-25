@@ -37,3 +37,49 @@ public:
         return res;
     }
 };
+void insertAtTail(ListNode*& head, ListNode*& tail, int value) {
+    ListNode* newNode = new ListNode(value);
+
+    if (head == nullptr) {
+        head = newNode;
+        tail = newNode;
+        return;
+    }
+
+    tail->next = newNode;
+    tail = newNode;
+}
+
+void printList(ListNode* head) {
+    while (head != nullptr) {
+        cout << head->val << " ";
+        head = head->next; 
+    }
+}
+
+int main() {
+    int n, m;
+    cin >> n >> m;
+
+    ListNode* list1 = nullptr;
+    ListNode* tail1 = nullptr;
+
+    for (int i = 0; i < n; i++) {
+        int value;
+        cin >> value;
+        insertAtTail(list1, tail1, value);
+    }
+
+    ListNode* list2 = nullptr;
+    ListNode* tail2 = nullptr;
+
+    for (int i = 0; i < m; i++) {
+        int value;
+        cin >> value;
+        insertAtTail(list2, tail2, value);
+    }
+
+    Solution sol;
+    ListNode* res = sol.mergeTwoLists(list1, list2);
+    printList(res);
+}
