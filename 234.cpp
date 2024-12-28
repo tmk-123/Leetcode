@@ -21,11 +21,6 @@ public:
             temp = temp->next;
         }
 
-        if (check(v)) return true;
-        return false;
-    }
-
-    bool check(vector<int> v) {
         int left = 0, right = v.size() - 1;
         while (left < right) {
             if (v[left] != v[right]) return false;
