@@ -9,26 +9,24 @@ struct ListNode {
    ListNode(int x) : val(x), next(nullptr) {}
    ListNode(int x, ListNode* next) : val(x), next(next) {}
 };
-
-    class Solution {
-    public:
-        ListNode* swapNodes(ListNode* head, int k) {
-            ListNode *left = head, *right = head;
-            for (int i = 0; i < k - 1; i++) {
-                right = right->next;
-            }
-            
-            ListNode* first = right;
-            while (right->next != nullptr) {
-                right = right->next;
-                left = left->next;
-            }
-
-            swap(first->val, left->val);
-            return head;
+class Solution {
+public:
+    ListNode* swapNodes(ListNode* head, int k) {
+        ListNode *left = head, *right = head;
+        for (int i = 0; i < k - 1; i++) {
+            right = right->next;
         }
-    };
+        
+        ListNode* first = right;
+        while (right->next != nullptr) {
+            right = right->next;
+            left = left->next;
+        }
 
+        swap(first->val, left->val);
+        return head;
+    }
+};
 void insertAtTail(ListNode*& head, ListNode*& tail, int value) {
     ListNode* newNode = new ListNode(value);
 
@@ -41,7 +39,7 @@ void insertAtTail(ListNode*& head, ListNode*& tail, int value) {
     tail->next = newNode;
     tail = newNode;
 }
-void printList(ListNgitode* head) {
+void printList(ListNode* head) {
     while (head != nullptr) {
         cout << head->val << " ";
         head = head->next;
