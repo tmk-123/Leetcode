@@ -9,6 +9,7 @@ struct ListNode {
     ListNode(int x) : val(x), next(nullptr) {}
     ListNode(int x, ListNode* next) : val(x), next(next) {} 
 };
+
 class Solution {
 public:
     ListNode* deleteDuplicates(ListNode* head) {
@@ -28,10 +29,11 @@ public:
             head = head->next;
         } 
         current->next = nullptr;
-        
+
         return dummy->next;
     }
 };
+
 void insertAtTail(ListNode*& head, ListNode*& tail, int value) {
     ListNode* newNode = new ListNode(value);
 
@@ -44,7 +46,6 @@ void insertAtTail(ListNode*& head, ListNode*& tail, int value) {
     tail->next = newNode;
     tail = newNode;
 }
-
 void printList(ListNode* head) {
     while (head != nullptr) {
         cout << head->val << " ";
