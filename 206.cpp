@@ -15,21 +15,17 @@ public:
     ListNode* reverseList(ListNode* head) {
         if (head == nullptr || head->next == nullptr) return head;
 
-        ListNode* temp = head;
-        vector<int> v;
+        ListNode* prev = nullptr;
+        ListNode* cur = head;
 
-        while (temp != nullptr) {
-            v.push_back(temp->val);
-            temp = temp->next;    
-        }
+        while (cur) {
+            ListNode* temp = cur->next;
+            cur->next = prev;
+            prev = cur;
+            cur = temp;
+        } 
 
-        ListNode* t = head;
-        for (int i = v.size() - 1; i >= 0; i--) {
-            t->val = v[i];
-            t = t->next;
-        }
-
-        return head;
+        return prev;
     }
 };
 
