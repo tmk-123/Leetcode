@@ -17,41 +17,25 @@ public:
 
         ListNode* prev = head;
         head = head->next;
+        int index = 2;
         vector<int> v;
 
         while (head->next) {
             if ((prev->val < head->val && head->next->val < head->val) ||
                 (prev->val > head->val && head->next->val > head->val)) {
-                    v.push_back(1);
+                    v.push_back(index);
                 }
-            else v.push_back(0);
 
             prev = head;
             head = head->next;
+            index++;
         }
 
-        int minDistance = -1, maxDistance = -1;
+        if (v.size() < 2) return {-1, -1};
 
-        int left = 0, right = v.size() - 1;
-        while (left < right) {
-            if (v[left] == 1 && v[right] == 1) {
-                maxDistance = right - left;
-                break;
-            }
-            if (v[left] == 0) left++;
-            if (v[right] == 0) right--;
-        }
+        int minDistance = INT_MAX, maxDistance = v[v.size() - 1] - v[0];
+        for (int i = 1; i < v.size(); i++) minDistance = min(minDistance, v[i] - v[i - 1]);
         
-        if (maxDistance == -1) return {-1, -1};
-
-        for (int i = left + 1; i < v.size(); i++) {
-            if (v[i] == 1) {
-                if (minDistance != -1) minDistance = min(minDistance, i - left);
-                else minDistance = i - left;
-                left = i;
-            }
-        } 
-
         return {minDistance, maxDistance};
     }
 };
