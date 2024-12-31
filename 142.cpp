@@ -69,5 +69,4 @@ int main() {
 
     Solution sol;
     ListNode* res = sol.detectCycle(head);
-    
 }
