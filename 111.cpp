@@ -14,19 +14,19 @@ struct TreeNode {
 class Solution {
 public:
     int minDep = INT_MAX;
-    void dfs(TreeNode* root, TreeNode* parent, int n) {
-        if (!root) {
-            if (!parent->left && !parent->right) {
-                minDep = min(minDep, n);
-            }
-            return;
+    void dfs(TreeNode* root, int n) {
+        if (!root) return;
+
+        if (!root->left && !root->right) {
+            minDep = min(minDep, n);
         }
-        dfs(root->left, root, n + 1);
-        dfs(root->right, root, n + 1);
+
+        dfs(root->left, n + 1);
+        dfs(root->right, n + 1);
     }
     int minDepth(TreeNode* root) {
         if (!root) return 0;
-        dfs(root, nullptr, 0);
+        dfs(root, 1);
         return minDep;
     }
 };
