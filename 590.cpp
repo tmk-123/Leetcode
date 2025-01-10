@@ -21,17 +21,17 @@ public:
 
 class Solution {
 public:
-    vector<int> preorder(Node* root) {
+    vector<int> postorder(Node* root) {
         vector<int> res;
         dfs(root, res);
         return res;
     }
     void dfs(Node* root, vector<int>& res) {
         if (!root) return;
-        res.push_back(root->val);
         for (Node* child : root->children) {
             dfs(child, res);
         }
+        res.push_back(root->val);
     }
 };
 
@@ -47,7 +47,7 @@ int main() {
     child1->children = {grandChild1, grandChild2};
 
     Solution sol;
-    vector<int> res = sol.preorder(root1);
+    vector<int> res = sol.postorder(root1);
     for (int x : res) {
         cout << x << " ";
     }
