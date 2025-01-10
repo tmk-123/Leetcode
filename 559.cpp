@@ -21,17 +21,17 @@ public:
 
 class Solution {
 public:
-    int maxDepth(Node* root) {
-        if (!root) {
-            return 0;
-        }
-
-        int maxDep = 0;
+    vector<int> postorder(Node* root) {
+        vector<int> res;
+        dfs(root, res);
+        return res;
+    }
+    void dfs(Node* root, vector<int>& res) {
+        if (!root) return;
         for (Node* child : root->children) {
-            maxDep = max(maxDep, maxDepth(child));
+            dfs(child, res);
         }
-
-        return maxDep + 1;
+        res.push_back(root->val);
     }
 };
 
@@ -47,5 +47,8 @@ int main() {
     child1->children = {grandChild1, grandChild2};
 
     Solution sol;
-    cout << sol.maxDepth(root1);
+    vector<int> res = sol.postorder(root1);
+    for (int x : res) {
+        cout << x << " ";
+    }
 }
