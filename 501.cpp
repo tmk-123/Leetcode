@@ -11,30 +11,31 @@ struct TreeNode {
     TreeNode(int x, TreeNode* left, TreeNode* right) : val(x), left(left), right(right) {}
 };
 
+// cây tìm kiếm nhị phân, nếu xuất hiện nhiều lần sẽ liên tiếp nhau
 class Solution {
 public:
     vector<int> findMode(TreeNode* root) {
-        unordered_map<int, int> freq;
-        dfs(root, freq);
-        
-        int maxFreq = 0;
-        for (auto x : freq) {
-            maxFreq = max(maxFreq, x.second);
-        }
-
+        int maxFreq = 0, currFreq = 0, prevVal = INT_MIN;
         vector<int> res;
-        for (auto x : freq) {
-            if (x.second == maxFreq) res.push_back(x.first);
-        }
-
+        dfs(root, prevVal, currFreq, maxFreq, res);
         return res;
     }
-    void dfs(TreeNode* root, unordered_map<int, int>& freq) {
+    void dfs(TreeNode* root, int& prevVal, int& currFreq, int& maxFreq, vector<int>& res) {
         if (!root) return;
 
-        freq[root->val]++;
-        dfs(root->left, freq);
-        dfs(root->right, freq);
+        dfs(root->left, prevVal, currFreq, maxFreq, res);
+
+        if (root->val == prevVal) currFreq++;
+        else currFreq = 1;
+        prevVal = root->val;
+
+        if (currFreq > maxFreq) {
+            maxFreq = currFreq; 
+            res = {root->val};
+        }
+        else if (currFreq == maxFreq) res.push_back(root->val);
+        
+        dfs(root->right, prevVal, currFreq, maxFreq, res);
     }
 };
 void inorder(TreeNode* root) {
@@ -44,11 +45,9 @@ void inorder(TreeNode* root) {
     inorder(root->right);
 }
 int main() {
-    TreeNode* root1 = new TreeNode(1);
+    TreeNode* root1 = new TreeNode(2);
     root1->left = new TreeNode(1);
-    root1->right = new TreeNode(3);
-    root1->right->left = new TreeNode(2);
-    root1->right->right = new TreeNode(2);
+    root1->right = new TreeNode(2);
 
     Solution sol;
     vector<int> res = sol.findMode(root1);
