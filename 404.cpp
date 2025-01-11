@@ -14,20 +14,14 @@ struct TreeNode {
 class Solution {
 public:
     int sumOfLeftLeaves(TreeNode* root) {
+        if (!root) return 0;
+
         int sum = 0;
-        dfs(root, false, sum);
+        if (root->left && !root->left->left && !root->left->right) sum += root->left->val;
+        sum += sumOfLeftLeaves(root->left);
+        sum += sumOfLeftLeaves(root->right);
         return sum;
     }   
-
-    void dfs(TreeNode* root, bool left, int& sum) {
-        if (!root->left && !root->right) {
-            if (left) sum += root->val;
-            return;
-        }
-
-        if (root->left) dfs(root->left, true, sum);
-        if (root->right) dfs(root->right, false, sum);
-    }
 };
 void inorder(TreeNode* root) {
     if (!root) return;
