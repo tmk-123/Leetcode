@@ -15,19 +15,18 @@ class Solution {
 public:
     int moves = 0;
 
-    int distributeCoins(TreeNode* root) {
+    int dfs(TreeNode* root) {
         if (!root) return 0;
 
-        int leftExcess = distributeCoins(root->left);
-        int rightExcess = distributeCoins(root->right);
-
-        moves += abs(leftExcess) + abs(rightExcess);
-
-        return root->val - 1 + leftExcess + rightExcess;
+        int left = dfs(root->left);
+        int right = dfs(root->right);
+    
+        moves += abs(left) + abs(right);
+        return root->val - 1 + left + right;
     }
 
-    int distributeCoinsMain(TreeNode* root) {
-        distributeCoins(root);
+    int distributeCoins(TreeNode* root) {
+        dfs(root);
         return moves;
     }
 };
@@ -38,12 +37,9 @@ void inorder(TreeNode* root) {
     inorder(root->right);
 }
 int main() {
-    TreeNode* root1 = new TreeNode(3);
-    root1->left = new TreeNode(1);
-    root1->right = new TreeNode(4);
-    root1->left->left = new TreeNode(3);
-    root1->right->left = new TreeNode(1);
-    root1->right->right = new TreeNode(5);
+    TreeNode* root1 = new TreeNode(0);
+    root1->left = new TreeNode(3);
+    root1->right = new TreeNode(0);
 
     Solution sol;
     cout << sol.distributeCoins(root1);
