@@ -35,7 +35,7 @@ public:
     }
 };
 int main() {
-    vector<int> v = {5,4,2,3};
+    vector<int> v = {1, 2, 3, 3};
     Solution sol;
     vector<int> res = sol.maxSubsequence(v, 2);
     for (int x : res) {
