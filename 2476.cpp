@@ -15,34 +15,25 @@ class Solution {
 public:
     vector<vector<int>> closestNodes(TreeNode* root, vector<int>& queries) {
         vector<vector<int>> res;
+        vector<int> v;
+        inorderTraversal(root, v);
 
-        for (int x : queries) {
-            int minX = -1, maxX = -1;
-            dfsMin(root, x, minX);
-            dfsMax(root, x, maxX);
-            res.push_back({minX, maxX});
+        for (int q : queries) {
+            auto it1 = upper_bound(v.begin(), v.end(), q);
+            int mini = (it1 == v.begin()) ? -1 : *(--it1);
+
+            auto it2 = lower_bound(v.begin(), v.end(), q);
+            int maxi = (it2 == v.end()) ? -1 : *it2;
+
+            res.push_back({mini, maxi});
         }
-
         return res;
     }
-
-    void dfsMin(TreeNode* root, int x, int& minX) {
+    void inorderTraversal(TreeNode* root, vector<int>& v) {
         if (!root) return;
-        
-        dfsMin(root->left, x, minX);
-        if (root->val <= x) {
-            minX = root->val;
-        }
-        dfsMin(root->right, x, minX);
-    }
-    void dfsMax(TreeNode* root, int x, int& maxX) {
-        if (!root) return;
-        
-        dfsMax(root->right, x, maxX);
-        if (root->val >= x) {
-            maxX = root->val;
-        }
-        dfsMax(root->left, x, maxX);
+        inorderTraversal(root->left, v);
+        v.push_back(root->val);
+        inorderTraversal(root->right, v);
     }
 };
 
