@@ -1,28 +1,32 @@
-int minSubarraySum(vector<int>& nums, int l, int r) {
-    int n = nums.size();
-    int minSum = INT_MAX; // Biến lưu tổng nhỏ nhất
-    int currentSum = 0;   // Biến lưu tổng của cửa sổ hiện tại
-    int windowSize = 0;   // Kích thước cửa sổ
+#include<bits/stdc++.h>
 
-    int left = 0; // Con trỏ trái
-    for (int right = 0; right < n; ++right) {
-        // Mở rộng cửa sổ
-        currentSum += nums[right];
-        windowSize++;
+using namespace std;
 
-        // Nếu cửa sổ lớn hơn kích thước tối đa, thu hẹp lại
-        while (windowSize > r) {
-            currentSum -= nums[left];
-            left++;
-            windowSize--;
+class Solution {
+public:
+    int minimumSumSubarray(vector<int>& nums, int l, int r) {
+        int minSum = INT_MAX;
+        bool found = false;
+        int n = nums.size();
+
+        for (int start = 0; start < n; start++) {
+            int sum = 0;
+            for (int end = start; end < n; end++) {
+                sum += nums[end];
+                int len = end - start + 1;
+                if (len >= l && len <= r && sum > 0) {
+                    minSum = min(minSum, sum);
+                    found = true;
+                }
+            }
         }
 
-        // Nếu cửa sổ đạt kích thước hợp lệ, kiểm tra điều kiện
-        if (windowSize >= l && currentSum > 0) {
-            minSum = min(minSum, currentSum);
-        }
+        return found ? minSum : -1;
     }
+};
 
-    // Nếu không tìm được subarray thoả mãn, trả về -1
-    return (minSum == INT_MAX) ? -1 : minSum;
+int main() {
+    vector<int> v = {3, -2, 1, 4};
+    Solution sol;
+    cout << sol.minimumSumSubarray(v, 2, 3);
 }
