@@ -7,14 +7,17 @@ public:
     int findLHS(vector<int>& nums) {
         sort(nums.begin(), nums.end());
         int maxLen = 0;
-        for (int i = 0; i < nums.size(); i++) {
-            for (int j = i; j < nums.size(); j++) {
-                if (nums[j] - nums[i] == 1) {
-                    maxLen = max(maxLen, j - i + 1);
-                }
-            }
-        }
+        int l = 0, r = 0;
 
+        while (r < nums.size()) {
+            if (nums[r] - nums[l] == 1) {
+                maxLen = max(maxLen, r - l + 1);
+                r++;
+            }
+            else if (nums[r] - nums[l] == 0) r++;
+            else l++;
+        }
+        
         return maxLen;
     }
 };
