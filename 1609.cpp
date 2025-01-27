@@ -21,36 +21,29 @@ public:
         while (!q.empty()) {
             int size = q.size();
             vector<int> v;
+            int lastVal = 0;
 
             for (int i = 0; i < size; i++) {
                 TreeNode* node = q.front();
                 q.pop();
-                v.push_back(node->val);
                 if (node->left) q.push(node->left);
                 if (node->right) q.push(node->right);
-            }
 
-            if (cnt % 2 == 0 && !checkOdd(v)) return false;
-            if (cnt % 2 != 0 && !checkEven(v)) return false; 
+                if (cnt % 2 == 0) {
+                    if (node->val % 2 == 0) return false;
+                    if (i > 0 && node->val <= lastVal) return false;   
+                    lastVal = node->val; 
+                }
+
+                if (cnt % 2 == 1) {
+                    if (node->val % 2 == 1) return false;
+                    if (i > 0 && node->val >= lastVal) return false;
+                    lastVal = node->val;
+                }
+            }
             cnt++;
         }
 
-        return true;
-    }
-
-    bool checkOdd(vector<int> v) {
-        for (int i = 0; i < v.size(); i++) {
-            if (i != 0 && v[i] <= v[i - 1]) return false;
-            if (v[i] % 2 == 0) return false;
-        }
-        return true;
-    }
-
-    bool checkEven(vector<int> v) {
-        for (int i = 0; i < v.size(); i++) {
-            if (i != 0 && v[i] >= v[i - 1]) return false;
-            if (v[i] % 2 == 1) return false;
-        }
         return true;
     }
 };
@@ -71,7 +64,7 @@ int main() {
     root1->left->left->left = new TreeNode(12);
     root1->left->left->right = new TreeNode(8);
     root1->right->left->left = new TreeNode(6);
-    root1->right->right->right = new TreeNode(6);
+    root1->right->right->right = new TreeNode(2);
 
     Solution sol;
     cout << sol.isEvenOddTree(root1);
