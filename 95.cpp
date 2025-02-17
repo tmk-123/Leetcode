@@ -42,7 +42,7 @@ public:
     }
 };
 void inorder(TreeNode* root) {
-    if (!root) return;
+    if (!root) return; 
     inorder(root->left);
     cout << root->val << " ";
     inorder(root->right);
