@@ -2,10 +2,6 @@
 
 using namespace std;
 
-bool compare(vector<int> a, vector<int> b) {
-    return a[0] < b[0];
-}
-
 class Solution {
 public:
     vector<vector<int>> mergeSimilarItems(vector<vector<int>>& items1, vector<vector<int>>& items2) {
