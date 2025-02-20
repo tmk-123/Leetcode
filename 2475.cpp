@@ -1,3 +1,5 @@
+#include<bits/stdc++.h>
+
 int unequalTriplets(vector<int>& A) {
     int trips = 0, pairs = 0, count[1001] = {};
     for (int i = 0; i < A.size(); ++i) {
