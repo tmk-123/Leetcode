@@ -13,7 +13,6 @@ public:
         }
 
         sort(heights.rbegin(), heights.rend());
-
         for (int i = 0; i < n; ++i) {
             names[i] = mapping[heights[i]];
         }
