@@ -11,7 +11,6 @@ public:
         while (i < j) {
             minAverage = min(minAverage, (nums[j--] + nums[i++]) / 2.0);
         }
-
         return minAverage;
     }
 };
