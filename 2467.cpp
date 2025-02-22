@@ -22,8 +22,6 @@ public:
         return false;
     }
     
-    
-
     void dfs_alice(int node, int parent, int time, int profit, vector<int>& amount) {
         if (time < bob_time[node] || bob_time[node] == INT_MAX) profit += amount[node];
         else if (time == bob_time[node]) profit += amount[node] / 2;
