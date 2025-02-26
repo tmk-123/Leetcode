@@ -5,7 +5,8 @@ using namespace std;
 class Solution {
 public:
     bool hasAlternatingBits(int n) {
-        long long x = n ^ (n >> 1); // nếu n có dạng 101010... thì sẽ full 1;
+        int x = n ^ (n >> 1); // nếu n có dạng 101010... thì sẽ full 1;
+        if (x == INT_MAX) return true; 
         return (x & (x + 1)) == 0;
     }
 };
