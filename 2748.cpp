@@ -2,20 +2,34 @@
 
 using namespace std;
 
+int getFirstDigit(int n) {
+    while (n >= 10) {
+        n /= 10;
+    }
+    return n;
+}
+
+int getLastDigit(int n) {
+    return n % 10;
+}
+
 class Solution {
 public:
-    bool isGood(vector<int>& nums) {
-        sort(nums.begin(), nums.end());
-        for (int i = 0; i < nums.size(); i++) {
-            if (i != nums.size() - 1) {
-                if (nums[i] != i + 1) return false;
+    int countBeautifulPairs(vector<int>& nums) {
+        int n = nums.size();
+        int count = 0;
+        
+        for (int i = 0; i < n; i++) {
+            int firstDigit = getFirstDigit(nums[i]); // Chữ số đầu tiên của nums[i]
+            for (int j = i + 1; j < n; j++) {
+                int lastDigit = getLastDigit(nums[j]); // Chữ số cuối cùng của nums[j]
+                if (__gcd(firstDigit, lastDigit) == 1) {
+                    count++;
+                }
             }
-            else if (nums[i] != nums.size() - 1) return false;
         }
-        return true;
+        
+        return count;
     }
 };
 
-int main() {
-
-}
