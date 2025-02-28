@@ -4,39 +4,23 @@ using namespace std;
 
 class Solution {
 public:
-    string tictactoe(vector<vector<int>>& moves) {
-        unordered_set<string> X, O;
-        int cnt = 0;
-        for (auto v : moves) {
-            string s;
-            if (v[0] == 0) s = "0" + to_string(v[1]);
-            else s = to_string(v[0] * 10 + v[1]);
-
-            if (cnt % 2 == 0) {
-                X.insert(s);
-            }
-            else O.insert(s);
-            cnt++;
+    bool Win(vector<vector<char>>& grid,char win){
+        for(int i=0;i<3;i++){
+            if(grid[i][0]==grid[i][1] && grid[i][2]==grid[i][1] && grid[i][0]==win) return true;
+            if(grid[0][i]==grid[1][i] && grid[2][i]==grid[1][i] && grid[0][i]==win) return true;
         }
+        return (grid[0][0]==grid[1][1] && grid[1][1]==grid[2][2] && grid[0][0]==win) || (grid[0][2]==grid[1][1] && grid[1][1]==grid[2][0] && grid[2][0]==win);
+    }
 
-        if ( (X.find("00") != X.end() && X.find("11") != X.end() && X.find("22") != X.end()) || 
-        X.find("00") != X.end() && X.find("01") != X.end() && X.find("02") != X.end() ||
-        X.find("10") != X.end() && X.find("11") != X.end() && X.find("12") != X.end() ||
-        X.find("20") != X.end() && X.find("21") != X.end() && X.find("22") != X.end() ||
-        X.find("00") != X.end() && X.find("10") != X.end() && X.find("20") != X.end() ||
-        X.find("01") != X.end() && X.find("11") != X.end() && X.find("21") != X.end() ||
-        X.find("02") != X.end() && X.find("12") != X.end() && X.find("22") != X.end() ||
-        X.find("20") != X.end() && X.find("11") != X.end() && X.find("02") != X.end()) return "A";
-
-        if ( (O.find("00") != O.end() && O.find("11") != O.end() && O.find("22") != O.end()) || 
-        O.find("00") != O.end() && O.find("01") != O.end() && O.find("02") != O.end() ||
-        O.find("10") != O.end() && O.find("11") != O.end() && O.find("12") != O.end() ||
-        O.find("20") != O.end() && O.find("21") != O.end() && O.find("22") != O.end() ||
-        O.find("00") != O.end() && O.find("10") != O.end() && O.find("20") != O.end() ||
-        O.find("01") != O.end() && O.find("11") != O.end() && O.find("21") != O.end() ||
-        O.find("02") != O.end() && O.find("12") != O.end() && O.find("22") != O.end() ||
-        O.find("20") != O.end() && O.find("11") != O.end() && O.find("02") != O.end()) return "B";
-        if (cnt == 9) return "Draw";
+    string tictactoe(vector<vector<int>>& moves) {
+        vector<vector<char>> grid(3,vector<char>(3,' '));
+        for(int i=0;i<moves.size();i++){
+            if(i%2==0) grid[moves[i][0]][moves[i][1]]='A';
+            else grid[moves[i][0]][moves[i][1]]='B';
+        }
+        if(Win(grid,'A')) return "A";
+        if(Win(grid,'B')) return "B";
+        if(moves.size()==9) return "Draw";
         return "Pending";
     }
-}; 
+};
