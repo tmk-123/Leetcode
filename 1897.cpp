@@ -8,7 +8,7 @@ public:
         unordered_map<char, int> freq;
         int n = words.size();
 
-        for (string& word : words) {
+        for (string word : words) {
             for (char c : word) {
                 freq[c]++;
             }
