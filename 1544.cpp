@@ -17,7 +17,7 @@ public:
         
         string result;
         while (!st.empty()) {
-            result = result + st.top();
+            result = st.top() + result;
             st.pop();
         }
         
