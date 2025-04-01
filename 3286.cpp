@@ -19,7 +19,6 @@ public:
             q.pop();
 
             if (h <= 0) continue;
-            
             if (x == n - 1 && y == m - 1 && h >= 1) return true;
 
             for (auto& [i, j] : directions) {
