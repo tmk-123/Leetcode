@@ -31,7 +31,7 @@ private:
         if (tree[node] < fruit) return -1;
         if (l == r) return l;
         int mid = (l + r) / 2;
-        if (tree[2 * node] >= fruit) return query(2 * node, l, mid, fruit);
+        if (tree[2 * node] > fruit) return query(2 * node, l, mid, fruit);
         else return query(node * 2 + 1, mid + 1, r, fruit);
     }
 
