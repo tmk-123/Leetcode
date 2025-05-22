@@ -5,32 +5,31 @@ using namespace std;
 class Solution {
 public:
     vector<vector<int>> adj;
-    vector<int> bob_time;
+    vector<int> bobTime;
     int maxProfit = INT_MIN;
 
-    bool dfs_bob(int node, int parent, int time) {
-        bob_time[node] = time; 
-        if (node == 0) return true; 
-    
-        for (int &next : adj[node]) {
-            if (next == parent) continue; 
-            if (dfs_bob(next, node, time + 1)) return true; 
+    bool dfsBob(int u, int parent, int time) {
+        bobTime[u] = time;
+        if (u == 0) return true;
+        
+        for (int v : adj[u]) {
+            if (v == parent) continue;
+            if (dfsBob(v, u, time + 1)) return true;
         }
-
-        // Nếu không tìm thấy đường về 0, đặt lại bob_time[node] để bỏ qua nhánh sai
-        bob_time[node] = INT_MAX;
+        
+        bobTime[u] = INT_MAX; // gán lại = INT_MAX nếu không thấy đường
         return false;
     }
-    
-    void dfs_alice(int node, int parent, int time, int profit, vector<int>& amount) {
-        if (time < bob_time[node] || bob_time[node] == INT_MAX) profit += amount[node];
-        else if (time == bob_time[node]) profit += amount[node] / 2;
+
+    void dfsAlice(int u, int parent, int time, int profit, vector<int>& amount) {
+        if (time < bobTime[u] || bobTime[u] == INT_MAX) profit += amount[u];
+        else if (time == bobTime[u]) profit += amount[u] / 2;
 
         bool isLeaf = true;
-        for (int &next : adj[node]) {
-            if (next == parent) continue;
+        for (int v : adj[u]) {
+            if (parent == v) continue;
             isLeaf = false;
-            dfs_alice(next, node, time + 1, profit, amount);
+            dfsAlice(v, u, time + 1, profit, amount);
         }
         if (isLeaf) maxProfit = max(maxProfit, profit);
     }
@@ -38,15 +37,15 @@ public:
     int mostProfitablePath(vector<vector<int>>& edges, int bob, vector<int>& amount) {
         int n = amount.size();
         adj.assign(n, vector<int>());
-        bob_time.assign(n, INT_MAX);
-
-        for (auto &edge : edges) {
-            adj[edge[0]].push_back(edge[1]);
-            adj[edge[1]].push_back(edge[0]);
+        bobTime.assign(n , INT_MAX);    
+        
+        for (auto e : edges) {
+            adj[e[0]].push_back(e[1]);
+            adj[e[1]].push_back(e[0]);
         }
 
-        dfs_bob(bob, -1, 0);
-        dfs_alice(0, -1, 0, 0, amount);
+        dfsBob(bob, -1, 0);
+        dfsAlice(0, -1, 0, 0, amount);
         return maxProfit;
     }
 };
