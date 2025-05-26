@@ -22,4 +22,4 @@ public:
         // vì mỗi lần hoán đổi giúp mất đi 2 cái
         return (cnt + 1) / 2;
     }
-};
+}; 
